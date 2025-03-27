@@ -1,0 +1,424 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot name="sw_car_robot">
+    <!-- 基础底盘 -->
+    <link name="base_link">
+        <inertial>
+            <origin xyz="-0.0115548507811187 4.43303730404548e-05 -0.00438983663929073" rpy="0 0 0"/>
+            <mass value="1.92416644066463"/>
+            <inertia
+                ixx="0.0114789802265756" ixy="1.48692437305398e-09" ixz="-9.09888117377426e-19"
+                iyy="0.0208403844664953" iyz="3.009423885416e-20" izz="0.031921780608387"/>
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://sw_car_robot/meshes/base_link.STL"/>
+            </geometry>
+            <material name="">
+                <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1"/>
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://sw_car_robot/meshes/base_link.STL"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <!-- 右轮 -->
+    <link name="right_wheel_Link">
+        <inertial>
+            <origin xyz="-3.27091740914831e-08 -0.000624031143720775 -2.20238052926758e-06" rpy="0 0 0"/>
+            <mass value="0.936891183989554"/>
+            <inertia
+                ixx="0.00158203298303897" ixy="8.2652616903286e-10" ixz="2.73570747813025e-09"
+                iyy="0.00295416607086207" iyz="-1.00413405252824e-07" izz="0.00158201485524712"/>
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://sw_car_robot/meshes/right_wheel_Link.STL"/>
+            </geometry>
+            <material name="">
+                <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1"/>
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://sw_car_robot/meshes/right_wheel_Link.STL"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="right_wheel_joint" type="continuous">
+        <origin xyz="0.00021033 -0.13235 -0.052" rpy="0 0 0"/>
+        <parent link="base_link"/>
+        <child link="right_wheel_Link"/>
+        <axis xyz="0 -1 0"/>
+    </joint>
+
+    <!-- 左轮 -->
+    <link name="left_wheel_Link">
+        <inertial>
+            <origin xyz="-3.27091740914831e-08 0.000624031143720782 2.20238052930227e-06" rpy="0 0 0"/>
+            <mass value="0.936891183989552"/>
+            <inertia
+                ixx="0.00158203298303897" ixy="-8.26526169652693e-10" ixz="-2.7357074795091e-09"
+                iyy="0.00295416607086206" iyz="-1.00413405252852e-07" izz="0.00158201485524712"/>
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://sw_car_robot/meshes/left_wheel_Link.STL"/>
+            </geometry>
+            <material name="">
+                <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1"/>
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://sw_car_robot/meshes/left_wheel_Link.STL"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="left_wheel_joint" type="continuous">
+        <origin xyz="0.00021033 0.13245 -0.052" rpy="0 0 0"/>
+        <parent link="base_link"/>
+        <child link="left_wheel_Link"/>
+        <axis xyz="0 -1 0"/>
+    </joint>
+
+    <!-- 激光雷达 -->
+    <link name="laser_link">
+        <inertial>
+            <origin xyz="0.00389538377842952 6.96636667121553e-05 0.00675620343221199" rpy="0 0 0"/>
+            <mass value="0.000111381912632094"/>
+            <inertia
+                ixx="8.09809329043561e-10" ixy="2.73503561864404e-14" ixz="-2.38510959093959e-14"
+                iyy="8.09669103957883e-10" iyz="-2.71309792689796e-15" izz="1.1705711515088e-10"/>
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://sw_car_robot/meshes/laser_link.STL"/>
+            </geometry>
+            <material name="">
+                <color rgba="0.376470588235294 0.376470588235294 0.376470588235294 1"/>
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://sw_car_robot/meshes/laser_link.STL"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="laser_joint" type="continuous">
+        <origin xyz="-0.0036345 0.0015781 0.0153" rpy="0 0 0"/>
+        <parent link="base_link"/>
+        <child link="laser_link"/>
+        <axis xyz="0 0 1"/>
+    </joint>
+
+    <!-- 陀螺仪 -->
+    <link name="gyro_link">
+        <inertial>
+            <origin xyz="-0.000461131492249467 -1.49767170332105e-08 0.0111420685976309" rpy="0 0 0"/>
+            <mass value="0.0548244190262658"/>
+            <inertia
+                ixx="1.00905498581389e-05" ixy="-7.81875144258967e-12" ixz="-8.08032197163114e-09"
+                iyy="1.47422266994545e-05" iyz="1.26941468245718e-12" izz="2.14471397750011e-05"/>
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://sw_car_robot/meshes/gyro_link.STL"/>
+            </geometry>
+            <material name="">
+                <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1"/>
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://sw_car_robot/meshes/gyro_link.STL"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="gyro_joint" type="fixed">
+        <origin xyz="0.08026 4.7299e-05 0.004" rpy="0 0 0"/>
+        <parent link="base_link"/>
+        <child link="gyro_link"/>
+        <axis xyz="0 0 0"/>
+    </joint>
+
+    <!-- 左前轮 -->
+    <link name="lf_Link">
+        <inertial>
+            <origin xyz="0.00478439486534099 -0.000194940503855434 -0.0200897415759267" rpy="0 0 0"/>
+            <mass value="0.0764331852561439"/>
+            <inertia
+                ixx="6.38707770236007e-05" ixy="2.8712251915659e-07" ixz="1.04097740579097e-05"
+                iyy="5.80010180912247e-05" iyz="-5.27406370320295e-07" izz="5.40103969527259e-05"/>
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://sw_car_robot/meshes/lf_Link.STL"/>
+            </geometry>
+            <material name="">
+                <color rgba="0.756862745098039 0.768627450980392 0.752941176470588 1"/>
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://sw_car_robot/meshes/lf_Link.STL"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="lf_joint" type="continuous">
+        <origin xyz="0.30426 0.13105 -0.044752" rpy="0 0 0"/>
+        <parent link="base_link"/>
+        <child link="lf_Link"/>
+        <axis xyz="0 0 -1"/>
+    </joint>
+
+    <!-- 左前轮轮 -->
+    <link name="lf_wheel_Link">
+        <inertial>
+            <origin xyz="-2.38627235416011e-07 -1.45797873774001e-10 -5.82427377576744e-08" rpy="0 0 0"/>
+            <mass value="0.150467637750394"/>
+            <inertia
+                ixx="7.04259874807459e-05" ixy="2.5530347689886e-13" ixz="-6.7518876650059e-12"
+                iyy="0.000108333870406132" iyz="2.62322526395858e-10" izz="7.04301499801809e-05"/>
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://sw_car_robot/meshes/lf_wheel_Link.STL"/>
+            </geometry>
+            <material name="">
+                <color rgba="0.756862745098039 0.768627450980392 0.752941176470588 1"/>
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://sw_car_robot/meshes/lf_wheel_Link.STL"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="lf_wheel_joint" type="continuous">
+        <origin xyz="0.024001 0 -0.055747" rpy="0 0 0"/>
+        <parent link="lf_Link"/>
+        <child link="lf_wheel_Link"/>
+        <axis xyz="0 1 0"/>
+    </joint>
+
+    <!-- 右前轮 -->
+    <link name="rf_Link">
+        <inertial>
+            <origin xyz="0.00478439486534088 -0.000194940503855452 -0.0200897415759266" rpy="0 0 0"/>
+            <mass value="0.0764331852561441"/>
+            <inertia
+                ixx="6.38707770236003e-05" ixy="2.87122519156654e-07" ixz="1.04097740579096e-05"
+                iyy="5.80010180912242e-05" iyz="-5.27406370320046e-07" izz="5.40103969527257e-05"/>
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://sw_car_robot/meshes/rf_Link.STL"/>
+            </geometry>
+            <material name="">
+                <color rgba="0.756862745098039 0.768627450980392 0.752941176470588 1"/>
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://sw_car_robot/meshes/rf_Link.STL"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="rf_joint" type="continuous">
+        <origin xyz="0.30426 -0.13095 -0.044752" rpy="0 0 0"/>
+        <parent link="base_link"/>
+        <child link="rf_Link"/>
+        <axis xyz="0 0 -1"/>
+    </joint>
+
+    <!-- 右前轮轮 -->
+    <link name="rf_wheel_Link">
+        <inertial>
+            <origin xyz="-2.38627238857703e-07 -1.45803789181054e-10 -5.82427377993078e-08" rpy="0 0 0"/>
+            <mass value="0.150467637750351"/>
+            <inertia
+                ixx="7.04259874807455e-05" ixy="2.55314552251718e-13" ixz="-6.75188720255896e-12"
+                iyy="0.000108333870406124" iyz="2.62322526665939e-10" izz="7.04301499801704e-05"/>
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://sw_car_robot/meshes/rf_wheel_Link.STL"/>
+            </geometry>
+            <material name="">
+                <color rgba="0.756862745098039 0.768627450980392 0.752941176470588 1"/>
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://sw_car_robot/meshes/rf_wheel_Link.STL"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="rf_wheel_joint" type="continuous">
+        <origin xyz="0.024001 0 -0.055747" rpy="0 0 0"/>
+        <parent link="rf_Link"/>
+        <child link="rf_wheel_Link"/>
+        <axis xyz="0 1 0"/>
+    </joint>
+
+    <!-- 右后轮 -->
+    <link name="rb_Link">
+        <inertial>
+            <origin xyz="0.00478439486534091 -0.000194940503855445 -0.0200897415759267" rpy="0 0 0"/>
+            <mass value="0.0764331852561443"/>
+            <inertia
+                ixx="6.38707770236009e-05" ixy="2.87122519156624e-07" ixz="1.04097740579094e-05"
+                iyy="5.80010180912248e-05" iyz="-5.27406370320141e-07" izz="5.40103969527262e-05"/>
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://sw_car_robot/meshes/rb_Link.STL"/>
+            </geometry>
+            <material name="">
+                <color rgba="0.756862745098039 0.768627450980392 0.752941176470588 1"/>
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://sw_car_robot/meshes/rb_Link.STL"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="rb_joint" type="continuous">
+        <origin xyz="-0.30374 -0.13073 -0.044752" rpy="0 0 0"/>
+        <parent link="base_link"/>
+        <child link="rb_Link"/>
+        <axis xyz="0 0 -1"/>
+    </joint>
+
+    <!-- 右后轮轮 -->
+    <link name="rb_wheel_Link">
+        <inertial>
+            <origin xyz="-2.3862723868423e-07 -1.45789807309837e-10 -5.82427378686967e-08" rpy="0 0 0"/>
+            <mass value="0.150467637750213"/>
+            <inertia
+                ixx="7.04259874806708e-05" ixy="2.553556874635e-13" ixz="-6.75188927627215e-12"
+                iyy="0.000108333870406104" iyz="2.62322522658485e-10" izz="7.04301499800761e-05"/>
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://sw_car_robot/meshes/rb_wheel_Link.STL"/>
+            </geometry>
+            <material name="">
+                <color rgba="0.756862745098039 0.768627450980392 0.752941176470588 1"/>
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://sw_car_robot/meshes/rb_wheel_Link.STL"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="rb_wheel_joint" type="continuous">
+        <origin xyz="0.024001 0 -0.055747" rpy="0 0 0"/>
+        <parent link="rb_Link"/>
+        <child link="rb_wheel_Link"/>
+        <axis xyz="0 1 0"/>
+    </joint>
+
+    <!-- 左后轮 -->
+    <link name="lb_Link">
+        <inertial>
+            <origin xyz="0.00478439486534086 -0.000194940503855462 -0.0200897415759267" rpy="0 0 0"/>
+            <mass value="0.0764331852561445"/>
+            <inertia
+                ixx="6.38707770236011e-05" ixy="2.87122519156614e-07" ixz="1.04097740579094e-05"
+                iyy="5.8001018091225e-05" iyz="-5.27406370320138e-07" izz="5.40103969527264e-05"/>
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://sw_car_robot/meshes/lb_Link.STL"/>
+            </geometry>
+            <material name="">
+                <color rgba="0.756862745098039 0.768627450980392 0.752941176470588 1"/>
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://sw_car_robot/meshes/lb_Link.STL"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="lb_joint" type="continuous">
+        <origin xyz="-0.30374 0.1308 -0.043752" rpy="0 0 0"/>
+        <parent link="base_link"/>
+        <child link="lb_Link"/>
+        <axis xyz="0 0 -1"/>
+    </joint>
+
+    <!-- 左后轮轮 -->
+    <link name="lb_wheel_Link">
+        <inertial>
+            <origin xyz="-2.38627235499278e-07 -1.45797873774001e-10 -5.82427377437966e-08" rpy="0 0 0"/>
+            <mass value="0.150467637750394"/>
+            <inertia
+                ixx="7.0425987480746e-05" ixy="2.55303462701306e-13" ixz="-6.75188755756752e-12"
+                iyy="0.000108333870406132" iyz="2.62322526366069e-10" izz="7.04301499801806e-05"/>
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://sw_car_robot/meshes/lb_wheel_Link.STL"/>
+            </geometry>
+            <material name="">
+                <color rgba="0.756862745098039 0.768627450980392 0.752941176470588 1"/>
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://sw_car_robot/meshes/lb_wheel_Link.STL"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="lb_wheel_joint" type="continuous">
+        <origin xyz="0.024001 0 -0.055747" rpy="0 0 0"/>
+        <parent link="lb_Link"/>
+        <child link="lb_wheel_Link"/>
+        <axis xyz="0 1 0"/>
+    </joint>
+</robot>
